@@ -18,13 +18,13 @@ class MenuItem(models.Model):
     Each MenuItem may have an explicit URL or a named URL generated from route.
     Each MenuItem can be nested.
     """
-    menu = models.ForeignKey(Menu, related_name='items', on_delete=models.CASCADE)
     # Foreign key to model Menu linking menu items with specific Menu
+    menu = models.ForeignKey(Menu, related_name='items', on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     url = models.CharField(max_length=255, blank=True, null=True)
     named_url = models.CharField(max_length=255, blank=True, null=True)
-    parent = models.ForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
     # Foreign key to itself allowing to create tree-like menu structure
+    parent = models.ForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
 
     class Meta:
         unique_together = ('menu', 'name')
