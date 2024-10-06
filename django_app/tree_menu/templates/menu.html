@@ -2,16 +2,16 @@
     {% for item in menu_items %}
         <li>
             {% if item.get_url %}
-                <a href="{{ item.get_url }}" {% if current_url == item.get_url %} style="color:green;" {% endif %}>
+                <a href="{{ item.get_url }}" {% if current_url == item.get_url %} class="active" {% endif %}>
                     {{ item.name }}
                 </a>
             {% else %}
-                {{ item.name }}
+                <p>{{ item.name }}</p>
             {% endif %}
             {% if item == active_parents.0 %}
                 {% include 'menu.html' with menu_items=item.children.all current_url=current_url active_parents=active_parents|slice:"1:" %}
             {% endif %}
-            {% if current_url == item.get_url %}
+            {% if current_url == item.get_url or not item.get_url and not item == active_parents.0 %}
                 {% if item.children.all %}
                     <ul>
                         {% for child in item.children.all %}
@@ -21,7 +21,7 @@
                                         {{ child.name }}
                                     </a>
                                 {% else %}
-                                    {{ child.name }}
+                                    {% include 'menu.html' with menu_items=child|slice:":" current_url=current_url %}
                                 {% endif %}
                             </li>
                         {% endfor %}

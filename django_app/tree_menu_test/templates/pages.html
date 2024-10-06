@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% load menu_tags %}
+    <nav class="sidenav">
+        <h2>TreeMenu</h2>
+        <h3><a href='{% url index %}'>Home</a></h3>
+        <h3 class="menu-name">{{ menu }}</h3>
+        {% draw_menu menu %}
+    </nav>
+    <div class="main">
+        <h1>This is a {{ page_name }} Page</h1>
+        <p>Navigate to the other pages of the {{ menu }} using TreeMenu</p>
+    </div>
+
+{% endblock %}
